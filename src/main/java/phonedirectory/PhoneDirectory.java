@@ -11,6 +11,10 @@ public interface PhoneDirectory {
 	boolean removeEntry(String name);
 	
 	 List<PhoneEntry> listAllEntries();
+	 
+	 int size();
+	 
+	 void clear();
 	
 
 }

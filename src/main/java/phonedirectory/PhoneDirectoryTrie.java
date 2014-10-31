@@ -8,12 +8,19 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 
 	private Node root;
 	private List<PhoneEntry> entries = new ArrayList<PhoneEntry>();
+	private int size = 0;
+	
 	public PhoneDirectoryTrie(){
 		root = new Node(null,null);
 	}
 	
 	
 	public boolean addEntry(String name, String number) {
+		
+		if(doesNameExist(name)){
+			return false;
+		}
+		
 		Node current = this.root;
 		boolean addedFlag = false;
 		for(Character c : name.toCharArray()){
@@ -27,11 +34,11 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 				addedFlag = true;
 			}
 		}
-		if(addedFlag) {
+			size++;
 			current.setEnd(true);
 			current.setNumber(number);
-		}
-		return addedFlag;
+		
+		return true;
 	}
 
 	public List<PhoneEntry> searchNameWithPrefix(String name) {
@@ -51,12 +58,16 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 		
 		if(n.isEnd()){
 			entries.add(new PhoneEntry(currentPrefix, n.getNumber()));
-			currentPrefix = "";
+			
+			for(Entry<Character, Node> entry : n.getChildren().entrySet()){
+				searchFromNode(entry.getValue(), currentPrefix + entry.getKey());
+			}
 		} else {
 			for(Entry<Character, Node> entry : n.getChildren().entrySet()){
 				searchFromNode(entry.getValue(), currentPrefix + entry.getKey());
 			}
 		}
+		
 		return entries;
 	}
 
@@ -82,6 +93,7 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 				current = temp;
 			}
 		}
+		size--;
 		return true;
 		
 	}
@@ -100,7 +112,19 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 	}
 	
 	public List<PhoneEntry> listAllEntries(){
+		entries.clear();
 		return searchFromNode(this.root, "");
+	}
+
+
+	public int size() {
+		return size;
+	}
+
+
+	public void clear() {
+		this.root = new Node(null, null);
+		this.size = 0;
 	}
 
 
