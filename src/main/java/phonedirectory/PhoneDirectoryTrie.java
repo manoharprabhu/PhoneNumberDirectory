@@ -86,11 +86,11 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 				break;
 			} else {
 				Node temp  = current.getParent();
-				current.getChildren().clear();
-				current.setC(null);
 				current.setEnd(false);
-				current.setParent(null);
 				current = temp;
+			}
+			if(current.isEnd()){
+				break;
 			}
 		}
 		size--;
