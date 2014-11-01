@@ -82,7 +82,7 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 		}
 		
 		while(true){
-			if(current.getChildren().size() > 1){
+			if(current == null || current.getChildren().size() > 1) {
 				break;
 			} else {
 				Node temp  = current.getParent();

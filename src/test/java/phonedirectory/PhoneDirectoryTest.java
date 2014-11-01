@@ -20,6 +20,20 @@ public class PhoneDirectoryTest {
 	}
 	
 	@Test
+	public void returnValueTest(){
+		Assert.assertEquals(true, directory.addEntry("Richard", "8050102366"));
+		Assert.assertEquals(true, directory.addEntry("Gilfoyle", "8050102366"));
+		Assert.assertEquals(false, directory.addEntry("Richard", "8050102366"));
+		Assert.assertEquals(true, directory.removeEntry("Richard"));
+		Assert.assertEquals(false, directory.removeEntry("Richard"));
+		Assert.assertEquals(true, directory.addEntry("Richard", "8050102366"));
+		Assert.assertEquals(true, directory.addEntry("RichardHendriks", "8050102366"));
+		Assert.assertEquals(true, directory.removeEntry("Richard"));
+		Assert.assertEquals(false, directory.removeEntry("Richard"));
+		
+	}
+	
+	@Test
 	public void searchTest(){
 		directory.addEntry("Manohar", "34324234");
 		directory.addEntry("Jeevan", "123456789");
@@ -39,27 +53,24 @@ public class PhoneDirectoryTest {
 	
 	@Test
 	public void modificationSizeTest(){
-		directory.addEntry("Manohar", "8050102366");
-		directory.addEntry("Jeevan", "123456789");
+		directory.addEntry("Richard", "8050102366");
+		directory.addEntry("Erlich", "123456789");
 		Assert.assertEquals(2, directory.size());
 		
-		directory.addEntry("Sunil", "9833432321");
+		directory.addEntry("Bighetti", "9833432321");
 		directory.addEntry("Gilfoyle", "939483833");
 		Assert.assertEquals(4, directory.size());
 		
-		directory.addEntry("Gilfoyle", "12232232");
-		Assert.assertEquals(4, directory.size());
-		
-		directory.addEntry("Mannu", "9928373331");
+		directory.addEntry("Donald", "9928373331");
 		Assert.assertEquals(5, directory.size());
 		
-		directory.removeEntry("Jeevan");
+		directory.removeEntry("Erlich");
 		Assert.assertEquals(4, directory.size());
 		
-		directory.addEntry("Man", "2343243");
+		directory.addEntry("Dinesh", "2343243");
 		Assert.assertEquals(5, directory.size());
 		
-		directory.removeEntry("Manohar");
+		directory.removeEntry("Richard");
 		Assert.assertEquals(4, directory.size());
 		
 		directory.clear();
