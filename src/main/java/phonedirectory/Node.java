@@ -2,7 +2,7 @@ package phonedirectory;
 
 import java.util.TreeMap;
 
-public class Node {
+ class Node {
 	private Character c;
 	private TreeMap<Character, Node> children;
 	private Node parent;
