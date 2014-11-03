@@ -89,7 +89,7 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 				current.setEnd(false);
 				current = temp;
 			}
-			if(current.isEnd()){
+			if(current == null || current.isEnd()){
 				break;
 			}
 		}

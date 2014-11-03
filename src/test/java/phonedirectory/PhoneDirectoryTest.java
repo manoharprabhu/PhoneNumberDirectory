@@ -97,6 +97,19 @@ public class PhoneDirectoryTest {
 		
 		directory.clear();
 		Assert.assertEquals(0, directory.size());
+		
+		directory.addEntry("Richard", "8050102366");
+		directory.addEntry("RichardHendriks", "8050102366");
+		directory.addEntry("RichardHendriksJR", "8050102366");
+		
+		directory.removeEntry("RichardHendriks");
+		Assert.assertEquals(2, directory.size());
+		
+		directory.addEntry("RichardHendriks", "8050102366");
+		
+		directory.removeEntry("Richard");
+		Assert.assertEquals(2, directory.size());
+		
 	}
 
 }
