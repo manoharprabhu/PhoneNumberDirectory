@@ -45,18 +45,18 @@ public class PhoneDirectoryTest {
 		directory.addEntry("Richard", "8050102366");
 		directory.addEntry("RichardHendriks", "8050102366");
 		directory.addEntry("RichardHendriksJR", "8050102366");
+		directory.addEntry("Richie", "8050102366");
+		
+		Assert.assertEquals(10, directory.size());
 		
 		Assert.assertEquals(3, directory.searchNameWithPrefix("Man").size());
 		Assert.assertEquals(0, directory.searchNameWithPrefix("Kat").size());
 		Assert.assertEquals(1, directory.searchNameWithPrefix("G").size());
 		Assert.assertEquals(3, directory.searchNameWithPrefix("Man").size());
 		Assert.assertEquals(1, directory.searchNameWithPrefix("Jeevan").size());
-		Assert.assertEquals(3, directory.searchNameWithPrefix("Ric").size());
+		Assert.assertEquals(4, directory.searchNameWithPrefix("Ric").size());
 		Assert.assertEquals(3, directory.searchNameWithPrefix("Richard").size());
 		Assert.assertEquals(2, directory.searchNameWithPrefix("RichardHendriks").size());
-		
-		
-		Assert.assertEquals(9, directory.listAllEntries().size());
 		
 	}
 	
@@ -109,6 +109,15 @@ public class PhoneDirectoryTest {
 		
 		directory.removeEntry("Richard");
 		Assert.assertEquals(2, directory.size());
+		
+		directory.addEntry("Richard", "8050102366");
+		
+		directory.removeEntry("RichardHendriksJR");
+		Assert.assertEquals(2, directory.size());
+		
+		directory.clear();
+		directory.removeEntry("Richard");
+		Assert.assertEquals(0, directory.size());
 		
 	}
 
