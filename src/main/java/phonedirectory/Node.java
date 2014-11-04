@@ -2,18 +2,18 @@ package phonedirectory;
 
 import java.util.TreeMap;
 
- class Node {
+ class  Node<T> {
 	private Character c;
-	private TreeMap<Character, Node> children;
-	private Node parent;
+	private TreeMap<Character, Node<T>> children;
+	private Node<T> parent;
 	private boolean isEnd;
-	private String number;
+	private T payload;
 	
-	public Node(Character c,String number){
+	public Node(Character c,T payload){
 		this.c = c;
-		setChildren(new TreeMap<Character, Node>());
+		setChildren(new TreeMap<Character, Node<T>>());
 		this.isEnd = false;
-		this.number = number;
+		this.setPayload(payload);
 		this.parent = null;
 	}
 	
@@ -31,28 +31,30 @@ import java.util.TreeMap;
 		this.isEnd = isEnd;
 	}
 
-	public TreeMap<Character, Node> getChildren() {
+	public TreeMap<Character, Node<T>> getChildren() {
 		return children;
 	}
 
-	public void setChildren(TreeMap<Character, Node> children) {
+	public void setChildren(TreeMap<Character, Node<T>> children) {
 		this.children = children;
 	}
 
-	public String getNumber() {
-		return number;
-	}
 
-	public void setNumber(String number) {
-		this.number = number;
-	}
 
-	public Node getParent() {
+	public Node<T> getParent() {
 		return parent;
 	}
 
-	public void setParent(Node parent) {
+	public void setParent(Node<T> parent) {
 		this.parent = parent;
+	}
+
+	public T getPayload() {
+		return payload;
+	}
+
+	public void setPayload(T payload) {
+		this.payload = payload;
 	}
 
 }

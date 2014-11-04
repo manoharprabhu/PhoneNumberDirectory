@@ -2,15 +2,15 @@ package phonedirectory;
 
 import java.util.List;
 
-public interface PhoneDirectory {
+public interface PhoneDirectory<T> {
 	
-	boolean addEntry(String name, String number);
+	boolean addEntry(String name, T payload);
 	
-	List<PhoneEntry> searchNameWithPrefix(String name);
+	List<T> searchNameWithPrefix(String name);
 	
 	boolean removeEntry(String name);
 	
-	 List<PhoneEntry> listAllEntries();
+	 List<T> listAllEntries();
 	 
 	 int size();
 	 

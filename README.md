@@ -11,7 +11,7 @@ Usage:
 
 Add a name,number pair using addEntry
 ```java
-PhoneDirectory directory = new PhoneDirectoryTrie();
+PhoneDirectory<String> directory = new PhoneDirectoryTrie<String>();
 directory.addEntry("Manohar Prabhu","9182324432");
 directory.addEntry("Rakesh Kumar","919923221234");
 ```
@@ -23,9 +23,8 @@ directory.removeEntry("Manohar Prabhu");
 
 Search all the entries beginning with a prefix using searchNameWithPrefix
 ```java
-List<PhoneEntry> entries = directory.searchNameWithPrefix("Man");
+List<String> entries = directory.searchNameWithPrefix("Man");
 ```
-The API currently returns the matches as a list of PhoneEntry (Name and Number)
 
 
 List all entries in directory using listAllEntries

@@ -4,30 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class PhoneDirectoryTrie implements PhoneDirectory {
+public class PhoneDirectoryTrie<T> implements PhoneDirectory<T> {
 
-	private Node root;
-	private List<PhoneEntry> entries = new ArrayList<PhoneEntry>();
+	private Node<T> root;
+	private List<T> entries = new ArrayList<T>();
 	private int size = 0;
 	
 	public PhoneDirectoryTrie(){
-		root = new Node(null,null);
+		root = new Node<T>(null,null);
 	}
 	
 	
-	public boolean addEntry(String name, String number) {
+	public boolean addEntry(String name, T payload) {
 		
 		if(doesNameExist(name)){
 			return false;
 		}
 		
-		Node current = this.root;
+		Node<T> current = this.root;
 		boolean addedFlag = false;
 		for(Character c : name.toCharArray()){
 			if(current.getChildren().containsKey(c)){
 				current = current.getChildren().get(c);
 			} else {
-				Node temp = new Node(c,null);
+				Node<T> temp = new Node<T>(c,null);
 				current.getChildren().put(c, temp);
 				temp.setParent(current);
 				current = temp;
@@ -36,34 +36,34 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 		}
 			size++;
 			current.setEnd(true);
-			current.setNumber(number);
+			current.setPayload(payload);
 		
 		return true;
 	}
 
-	public List<PhoneEntry> searchNameWithPrefix(String name) {
+	public List<T> searchNameWithPrefix(String name) {
 		entries.clear();
-		Node current = this.root;
+		Node<T> current = this.root;
 		for(Character c : name.toCharArray()){
 			if(current.getChildren().containsKey(c)){
 				current = current.getChildren().get(c);
 			} else {
-				return new ArrayList<PhoneEntry>();
+				return new ArrayList<T>();
 			}
 		}
 		return searchFromNode(current, name);
 	}
 	
-	private List<PhoneEntry> searchFromNode(Node n,String currentPrefix){
+	private List<T> searchFromNode(Node<T> n,String currentPrefix){
 		
 		if(n.isEnd()){
-			entries.add(new PhoneEntry(currentPrefix, n.getNumber()));
+			entries.add(n.getPayload());
 			
-			for(Entry<Character, Node> entry : n.getChildren().entrySet()){
+			for(Entry<Character, Node<T>> entry : n.getChildren().entrySet()){
 				searchFromNode(entry.getValue(), currentPrefix + entry.getKey());
 			}
 		} else {
-			for(Entry<Character, Node> entry : n.getChildren().entrySet()){
+			for(Entry<Character, Node<T>> entry : n.getChildren().entrySet()){
 				searchFromNode(entry.getValue(), currentPrefix + entry.getKey());
 			}
 		}
@@ -76,7 +76,7 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 			return false;
 		}
 		
-		Node current = this.root;
+		Node<T> current = this.root;
 		for(Character c : name.toCharArray()){
 			current = current.getChildren().get(c);
 		}
@@ -85,7 +85,7 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 			if(current == null || current.getChildren().size() > 1) {
 				break;
 			} else {
-				Node temp  = current.getParent();
+				Node<T> temp  = current.getParent();
 				current.setEnd(false);
 				current = temp;
 			}
@@ -99,7 +99,7 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 	}
 	
 	private boolean doesNameExist(String name){
-		Node current = this.root;
+		Node<T> current = this.root;
 		for(Character c : name.toCharArray()){
 			if(current.getChildren().containsKey(c)) {
 			current = current.getChildren().get(c);
@@ -111,7 +111,7 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 		return current.isEnd();
 	}
 	
-	public List<PhoneEntry> listAllEntries(){
+	public List<T> listAllEntries(){
 		entries.clear();
 		return searchFromNode(this.root, "");
 	}
@@ -123,7 +123,7 @@ public class PhoneDirectoryTrie implements PhoneDirectory {
 
 
 	public void clear() {
-		this.root = new Node(null, null);
+		this.root = new Node<T>(null, null);
 		this.size = 0;
 	}
 
